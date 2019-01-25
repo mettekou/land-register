@@ -1,0 +1,64 @@
+\documentclass[10pt,twoside,a4]{scrartcl}%
+
+\usepackage{fontspec}%
+\setmainfont{DIN Pro}%
+\newfontfamily\DinProLight[Ligatures=TeX]{DIN Pro Light}%
+
+\usepackage{polyglossia}%
+%\setdefaultlanguage{dutch}%
+
+\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}%
+
+\setkomafont{disposition}{\DinProLight}%
+
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\usepackage[unicode,
+            pdfauthor={Dylan Meysmans},
+            pdftitle={Testing the Land Register},
+            pdfsubject={},
+            pdfkeywords={},
+            pdfproducer={},
+            pdfcreator={}]{hyperref}%
+
+\begin{document}%
+
+\title{Testing the Land Register}%
+\author{Dylan Meysmans}%
+\date{\today}%
+\maketitle%
+
+To test the land register smart contract \texttt{Register.sol}, please use \href{https://remix.ethereum.org/#optimize=true&version=soljson-v0.5.3+commit.10d17f24.js}{the Remix IDE}\footnote{The URI we provide here already sets the proper compiler version and turns on optimization.}.
+First add \texttt{Register.sol} to Remix, then perform the following steps to test it out:
+
+\begin{enumerate}
+    \item Compilation
+    \begin{enumerate}
+        \item On the tab marked \textbf{Compile} on the right-hand side, set the current version to \textbf{0.5.3+commit.10d17f24}, if it is not already set.
+        \item On the same tab, check the box for \textbf{Auto compile} and optionally for \textbf{Enable Optimization}. 
+    \end{enumerate}
+    \item Execution
+    \begin{enumerate}
+        \item On the tab marked \textbf{Run} on the right-hand side, set the \textbf{Environment} to \textbf{JavaScript VM}.
+        \item On the same tab, select the \textbf{Register} contract and click \textbf{Deploy}. This should cause an instance of the contract to pop up on the bottom of the tab.
+    \end{enumerate}
+    \item Registering a land
+    \begin{enumerate}
+        \item Still on the \textbf{Run} tab, expand the \textbf{createLand} section for the contract instance.
+        \item Provide an array of x coordinates (e.g. \texttt{[0, 0, 1, 1]}) and an array of y coordinates (e.g. \texttt{[0, 1, 0, 1]}) marking the borders, the size of the land (e.g. \texttt{1}), and its value (e.g. \texttt{[0, 0, 1, 1]}).
+        \item For the owner parameter, provide one of the addresses from the \textbf{Account} list on top of the \textbf{Run} tab which you did not use to deploy the contract.
+        \item Click the \textbf{transact} button.
+        \item Expand the output of the \texttt{createLand} transaction on the console on the bottom of the window and read the \textbf{decoded output} field in the table to find out the unique code of the land registered. It is necessary to sell the land in the next step.
+    \end{enumerate}
+    \item Selling a land
+    \begin{enumerate}
+        \item Still on the \textbf{Run} tab, expand the \textbf{sell} section for the contract instance.
+        \item Provide the code output by the transaction in the previous step for the \textbf{code} parameter.
+        \item Provide an address from the \textbf{Account} list which you did not use to deploy the contract or as the owner for the land for the \textbf{to} parameter.
+        \item Provide any positive integer value you like for the \textbf{price} value.
+        \item Click the \textbf{transact} button.
+    \end{enumerate}%
+\end{enumerate}%
+
+\end{document}%
